@@ -7,7 +7,7 @@ import {
   ParseIntPipe,
   Post,
 } from "@nestjs/common";
-import { ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiTags } from "@nestjs/swagger";
 import { SocketIoGateway } from "../gateway";
 import { RoomService } from "../service";
 
@@ -20,6 +20,11 @@ export class RoomController {
     private readonly socketIoGateway: SocketIoGateway,
     private readonly roomService: RoomService
   ) {}
+
+  @Get()
+  async getRooms() {
+    return this.roomService.findRooms();
+  }
 
   @Post(":roomNo/position/:positionNo")
   async connectRoom(
@@ -54,15 +59,5 @@ export class RoomController {
     };
     // this.socketIoGateway.createRoom(room);
     // return room;
-  }
-
-  @Get("list")
-  @ApiOperation({
-    summary: "방 목록을 검색",
-    description: "방 목록을 검색한다",
-  })
-  @ApiOkResponse({ description: "방 목록을 반환" })
-  async getRooms() {
-    return "";
   }
 }
