@@ -3,7 +3,32 @@ import { Room, RoomDetail } from "../model";
 
 @Injectable()
 export class RoomService {
-  private rooms: Room[] = [];
+  private rooms: Room[] = [
+    {
+      no: 1,
+      details: [],
+    },
+    {
+      no: 2,
+      details: [],
+    },
+    {
+      no: 3,
+      details: [],
+    },
+    {
+      no: 4,
+      details: [],
+    },
+    {
+      no: 5,
+      details: [],
+    },
+    {
+      no: 6,
+      details: [],
+    },
+  ];
   constructor() {}
 
   findRooms() {
@@ -29,13 +54,14 @@ export class RoomService {
   deleteRoomDetailBySocketId(socketId: string) {
     let removedDetail: RoomDetail | undefined;
     this.rooms = this.rooms.map((v) => {
-      v.details = v.details?.filter((v) => {
-        if(v.socketId !== socketId) {
-          return true;
-        } else {
-          removedDetail = v;
-        }
-      }) || [];
+      v.details =
+        v.details?.filter((v) => {
+          if (v.socketId !== socketId) {
+            return true;
+          } else {
+            removedDetail = v;
+          }
+        }) || [];
       return v;
     });
     return removedDetail;
@@ -54,14 +80,17 @@ export class RoomService {
       });
     } else {
       room = roomDetail;
-      this.rooms.push({
+      this.rooms[1] = {
         no,
         details: [roomDetail],
-      });
+      };
+      // this.rooms.push({
+      //   no,
+      //   details: [roomDetail],
+      // });
     }
     return room as Room;
   }
-
 
   updateRoom(no: number, roomDetail: RoomDetail) {
     const currentRoom = this.rooms.find((v) => v.no === no);

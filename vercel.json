@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "github": {
+    "enabled": false
+  },
+  "builds": [
+    {
+      "src": "/build/main.js",
+      "use": "@now/node"
+    }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/build/main.js" },
+    { "handle": "filesystem" }
+  ]
+}

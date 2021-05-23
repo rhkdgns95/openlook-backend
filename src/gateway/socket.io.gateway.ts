@@ -21,9 +21,6 @@ enum Channel {
   RETURNING_SIGNAL = "RETURNING_SIGNAL"
 }
 
-const users = {};
-const socketToRoom = {};
-
 @WebSocketGateway()
 export class SocketIoGateway
   implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit
@@ -42,7 +39,8 @@ export class SocketIoGateway
     this.logger.log("Initialized!");
   }
   handleConnection(client: Socket, ...args: any[]) {
-    // this.logger.log("Client connected: ", client.id);
+    this.logger.log("Client connected: ", client.id);
+    console.log("Client connected: ", args);
   }
 
   handleDisconnect(socket: Socket) {
@@ -63,7 +61,11 @@ export class SocketIoGateway
       room?.details?.filter((v) => v.socketId !== socket.id) || [];
     console.log("room: ", beforeRoom);
     console.log("beforeRoom: ", beforeRoom);
+    // socket.emit(Channel.GET_CURRENT_ROOM, beforeRoom);
+    // temp
+    socket.join("room" + payload.roomNo);
     socket.emit(Channel.GET_CURRENT_ROOM, beforeRoom);
+    // socket.to('room' + payload.roomNo).emit(Channel.GET_CURRENT_ROOM, beforeRoom);
   }
 
   @SubscribeMessage(Channel.SENDING_SIGNAL)
