@@ -1,5 +1,6 @@
 # openlook-backend
 - Server configuration to configure webrtc.
+- Configure websocket and api.
 
 
 ## Todo 
